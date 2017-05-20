@@ -10,8 +10,8 @@ public class Solution {
     private static int rowcount = 0;
     private static int columncount = 0;
 
-    public static HashSet<Integer> searchingColumns(String filepath) {
-        readFromFile(filepath);
+    public static HashSet<Integer> searchingColumns() {
+        readFromFile();
         HashSet<Integer> columnset = new HashSet<Integer>();
 
         for (int column = 0; column < columncount; column++) {
@@ -30,8 +30,8 @@ public class Solution {
         return columnset;
     }
 
-    public static int theLeastMuliplication(String filepath) {
-        HashSet<Integer> columnset = searchingColumns(filepath);
+    public static int theLeastMuliplication() {
+        HashSet<Integer> columnset = searchingColumns();
         int leastmultiplication = (int) Math.pow(10,rowcount);
         int rightcolumn = 0;
 
@@ -53,10 +53,15 @@ public class Solution {
         return rightcolumn;
     }
 
-    private static void readFromFile(String filename) {
+    private static void readFromFile() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter the full path of the file from which you want to read the matrix");
+
+
 
         try {
-            Scanner scanner = new Scanner(new File(filename));
+            String filepath = reader.readLine();
+            Scanner scanner = new Scanner(new File(filepath));
 
             boolean key = false;
 
@@ -65,6 +70,7 @@ public class Solution {
             while (scanner.hasNext()) {
                 stringlist.add(scanner.nextLine());
             }
+            scanner.close();
 
             rowcount = stringlist.size();
             String[] columns = stringlist.get(0).split(" ");
@@ -88,16 +94,14 @@ public class Solution {
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
             System.exit(1);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Enter the full path of the file from which you want to read the matrix");
-
-        String filepath = reader.readLine();
 
         System.out.println("A column satisfying the condition, with the smallest product of elements is "
-                +theLeastMuliplication(filepath));
+                +theLeastMuliplication());
     }
 }
