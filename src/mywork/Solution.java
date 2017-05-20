@@ -1,7 +1,6 @@
+package mywork;
+
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -57,45 +56,37 @@ public class Solution {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter the full path of the file from which you want to read the matrix");
 
+        while (matrix == null) {
+            try {
+                String filepath = reader.readLine();
+                Scanner scanner = new Scanner(new File(filepath));
 
+                ArrayList<String> stringlist = new ArrayList<String>();
 
-        try {
-            String filepath = reader.readLine();
-            Scanner scanner = new Scanner(new File(filepath));
+                while (scanner.hasNext()) {
+                    stringlist.add(scanner.nextLine());
+                }
+                scanner.close();
 
-            boolean key = false;
+                rowcount = stringlist.size();
+                String[] columns = stringlist.get(0).split(" ");
+                columncount = columns.length;
 
-            ArrayList<String> stringlist = new ArrayList<String>();
+                matrix = new int[rowcount][columncount];
 
-            while (scanner.hasNext()) {
-                stringlist.add(scanner.nextLine());
-            }
-            scanner.close();
+                for (int row = 0; row < rowcount; row++) {
+                    String[] matrixline = stringlist.get(row).split(" ");
 
-            rowcount = stringlist.size();
-            String[] columns = stringlist.get(0).split(" ");
-            columncount = columns.length;
-
-            matrix = new int[rowcount][columncount];
-
-            for (int row = 0; row < stringlist.size(); row++) {
-                String[] matrixline = stringlist.get(row).split(" ");
-
-                if (key = false) {
-                    columncount = matrixline.length;
-                    key = true;
+                    for (int column = 0; column < columncount; column++) {
+                        matrix[row][column] = Integer.valueOf(matrixline[column]);
+                    }
                 }
 
-                for (int column = 0; column < matrixline.length; column++) {
-                    matrix[row][column] = Integer.valueOf(matrixline[column]);
-                }
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found, try again");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-            System.exit(1);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

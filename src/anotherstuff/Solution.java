@@ -5,33 +5,43 @@ import java.util.*;
 
 
 public class Solution {
-    private static int[][] matrix = new int[10][10];
+    private static int[][] matrix;
 
-    public static void readFromFile(String filename) {
-        try {
-            Scanner scanner = new Scanner(new File(filename));
+    public static void readFromFile() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-            ArrayList<String> arraylist = new ArrayList<String>();
+        System.out.println("Enter the full path of the file from which you want to read the matrix");
 
-            while (scanner.hasNext()) {
-                arraylist.add(scanner.nextLine());
-            }
+        while (matrix == null) {
+            try {
+                String filepath = reader.readLine();
 
-            for (int row = 0; row < arraylist.size(); row++) {
-                String[] matrixline = arraylist.get(row).split(" ");
+                Scanner scanner = new Scanner(new File(filepath));
 
-                for (int element = 0; element < matrixline.length; element++) {
-                    matrix[row][element] = Integer.valueOf(matrixline[element]);
+                ArrayList<String> arraylist = new ArrayList<String>();
+
+                while (scanner.hasNext()) {
+                    arraylist.add(scanner.nextLine());
                 }
+
+                matrix = new int[10][10];
+                for (int row = 0; row < arraylist.size(); row++) {
+                    String[] matrixline = arraylist.get(row).split(" ");
+
+                    for (int element = 0; element < matrixline.length; element++) {
+                        matrix[row][element] = Integer.valueOf(matrixline[element]);
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("file not found, try again");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("file not found");
-            System.exit(1);
         }
     }
 
-    public static void findSimilarRowAndColumn(String filename) {
-        readFromFile(filename);
+    public static void findSimilarRowAndColumn() {
+        readFromFile();
         HashMap<Integer,Integer> setofsimilarrowsandcolumns = new HashMap<Integer,Integer>();
 
         for (int iterator = 0; iterator < 10; iterator++) {
@@ -55,8 +65,6 @@ public class Solution {
                     setofsimilarrowsandcolumns.put(iterator,column);
                 }
             }
-
-
         }
 
         if (setofsimilarrowsandcolumns.isEmpty()) {
@@ -81,12 +89,8 @@ public class Solution {
     }
 
     public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println("Enter the full path of the file from which you want to read the matrix");
-        String filepath = reader.readLine();
-
-        findSimilarRowAndColumn(filepath);
+        findSimilarRowAndColumn();
 
     }
 }
