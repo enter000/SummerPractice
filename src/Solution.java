@@ -97,6 +97,7 @@ public class Solution {
 
         String filepath = reader.readLine();
 
-        System.out.println("A column satisfying the condition, with the smallest product of elements is "+theLeastMuliplication(filepath));
+        System.out.println("A column satisfying the condition, with the smallest product of elements is "
+                +theLeastMuliplication(filepath));
     }
 }
