@@ -11,7 +11,7 @@ public class Solution {
 
     public static HashSet<Integer> searchingColumns() {
         readFromFile();
-        HashSet<Integer> columnset = new HashSet<Integer>();
+        HashSet<Integer> columnset = new HashSet<>();
 
         for (int column = 0; column < columncount; column++) {
             boolean key = true;
@@ -31,6 +31,12 @@ public class Solution {
 
     public static int theLeastMuliplication() {
         HashSet<Integer> columnset = searchingColumns();
+
+        if (columnset.size() == 0) {
+            System.out.println("there are no columns satisfying the condition");
+            System.exit(1);
+        }
+
         int leastmultiplication = (int) Math.pow(10,rowcount);
         int rightcolumn = 0;
 
@@ -61,7 +67,7 @@ public class Solution {
                 String filepath = reader.readLine();
                 Scanner scanner = new Scanner(new File(filepath));
 
-                ArrayList<String> stringlist = new ArrayList<String>();
+                ArrayList<String> stringlist = new ArrayList<>();
 
                 while (scanner.hasNext()) {
                     stringlist.add(scanner.nextLine());
