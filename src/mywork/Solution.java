@@ -5,12 +5,11 @@ import java.util.*;
 
 
 public class Solution {
-    private static int[][] matrix;
-    private static int rowcount = 0;
-    private static int columncount = 0;
+    static int[][] matrix;
+    static int rowcount = 0;
+    static int columncount = 0;
 
     public static HashSet<Integer> searchingColumns() {
-        readFromFile();
         HashSet<Integer> columnset = new HashSet<>();
 
         for (int column = 0; column < columncount; column++) {
@@ -29,7 +28,7 @@ public class Solution {
         return columnset;
     }
 
-    public static int theLeastMuliplication() {
+    public static int theLeastMultiplication() {
         HashSet<Integer> columnset = searchingColumns();
 
         if (columnset.size() == 0) {
@@ -58,7 +57,7 @@ public class Solution {
         return rightcolumn;
     }
 
-    private static void readFromFile() {
+    static void readFromFile() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter the full path of the file from which you want to read the matrix");
 
@@ -94,11 +93,51 @@ public class Solution {
                 e.printStackTrace();
             }
         }
+
+        boolean key = true;
+        System.out.println("do u want to see matrix? type y to see, n to not");
+        while (key) {
+            String answer = reader.readLine();
+
+            if (answer.equals("y")) {
+                for (int row = 0; row < rowcount; row++) {
+                    for (int column = 0; column < columncount; column++) {
+                        System.out.print(matrix[row][column]+"\t");
+                    }
+                    System.out.println();
+                }
+                key = false;
+            } else {
+                if (answer.equals("n")) {
+                    System.out.println("as u wish");
+                    key = false;
+                }
+            }
+            System.out.println("try again");
+        }
     }
 
-    public static void main(String[] args) throws IOException {
+    static void matrixInput() {
+        System.out.println("how do u want to read matrix?");
+        System.out.println("write "+InsertSelection.FILE+" if u want to read matrix from file; " +
+                "write "+ InsertSelection.MYSELF+" if u want to put matrix yourself; " +
+                "write "+ InsertSelection.RANDOM+" if u want to do a random matrix.");
 
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        while (Solution.matrix == null) {
+         try {
+             String choise = reader.readLine();
+             InsertSelection.insertSelection(choise);
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+        }
+    }
+
+    public static void main(String[] args) {
+
+        matrixInput();
         System.out.println("A column satisfying the condition, with the smallest product of elements is "
-                +theLeastMuliplication());
+                +theLeastMultiplication());
     }
 }
